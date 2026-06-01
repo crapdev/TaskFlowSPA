@@ -1,11 +1,36 @@
 {
-    "users": [
-        {
-            "id":"123",
-            "roles":[]
-        }
-    ],
-    "tasks":[
-
-    ]
+  "users": [
+    {
+      "name": "cristian",
+      "lastname": "albor",
+      "email": "calborparra@gmail.com",
+      "password": "123",
+      "roles": [
+        "USER"
+      ],
+      "id": "v-lscze1Sqk"
+    },
+    {
+      "name": "cristian",
+      "lastname": "albor",
+      "email": "calborparra@gmail.com",
+      "password": "123",
+      "roles": [
+        "USER"
+      ],
+      "id": "MBtqyxXlgFQ"
+    },
+    {
+      "name": "cristian",
+      "lastname": "albor",
+      "email": "calborparra@gmail.com",
+      "password": "123",
+      "roles": [
+        "USER"
+      ],
+      "id": "xOu6gpBZVP4"
+    }
+  ],
+  "tasks": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -52,3 +52,7 @@ export function renderTaskForm() {
         </main>
     `
 }
+
+export function setUpTaskForm() {
+    return console.log('hola')
+}

@@ -43,3 +43,7 @@ export function renderProfile() {
         </main>
     ` 
 }
+
+export function setUpProfile() {
+    return console.log('hola')
+}

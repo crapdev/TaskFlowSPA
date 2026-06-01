@@ -1,17 +1,53 @@
-import { renderLogin } from "../views/auth/login";
+import { renderLogin, setUpLogin } from "../views/auth/login";
 import { renderNotFound } from "../views/auth/not-found";
-import { renderRegister } from "../views/auth/register";
+import { renderRegister, setUpRegister } from "../views/auth/register";
 import { renderHome } from "../views/home";
+import { renderTaskForm, setUpTaskForm } from "../views/task/task-form";
+import { renderTasks, setUpTasks } from "../views/task/tasks";
 import { renderAdmin } from "../views/users/admin";
-import { renderDashBoard } from "../views/users/dashboard";
+import { renderDashboard, setUpDashboard } from "../views/users/dashboard";
+import { renderProfile, setUpProfile } from "../views/users/profile";
 
-const routes = {
-    "/": renderHome,
-    "/login": renderLogin,
-    "/register": renderRegister,
-    "/dashboard": renderDashBoard,
-    "/admin": renderAdmin,
-    // ""
-    // "*": renderNotFound
+export const routes = {
+    "*": renderNotFound,
+    "/": {
+        render: renderHome
+    },
+    "/login": {
+        render: renderLogin,
+        setUp: setUpLogin,
+        requiresAuth: false
+    },
+    "/register": {
+        render: renderRegister,
+        setUp: setUpRegister,
+        requiresAuth: false
+    },
+    "/dashboard": {
+        render: renderDashboard,
+        setUp: setUpDashboard,
+        requiresAuth: true
+    },
+    "/admin": {
+        render: renderAdmin,
+        setUp: setUpRegister,
+        requiresAuth: true,
+        requiredRole: ["ADMIN"]
+    },
+    "/profile": {
+        render: renderProfile,
+        setUp: setUpProfile,
+        requiresAuth: true,
+    },
+    "/tasks": {
+        render: renderTasks,
+        setUp: setUpTasks,
+        requiresAuth: true,
+    },
+    "/taskForm": {
+        render: renderTaskForm,
+        setUp: setUpTaskForm,
+        requiresAuth: true,
+    },
 }
 

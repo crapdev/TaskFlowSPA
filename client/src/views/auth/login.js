@@ -44,3 +44,7 @@ export function renderLogin() {
     </main>
     `
 }
+
+export function setUpLogin() {
+    return console.log('hola')
+}

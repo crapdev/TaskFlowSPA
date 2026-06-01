@@ -56,3 +56,7 @@ export function renderTasks() {
         </main>
     `
 }
+
+export function setUpTasks() {
+    return console.log('hola')
+}

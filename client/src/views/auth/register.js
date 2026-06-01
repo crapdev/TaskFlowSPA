@@ -1,4 +1,5 @@
-import { crearUsuario } from "../../services/user.service";
+import { createUser } from "../../services/user.service";
+import { alertaExitosa } from "../../utils/alert";
 
 export function renderRegister() {
     return `
@@ -29,27 +30,27 @@ export function renderRegister() {
                 <div class="grid gap-5 md:grid-cols-2">
                 <div>
                     <label class="mb-2 block text-sm font-medium text-slate-700" for="register-name">Nombre</label>
-                    <input id="register-name" type="text" placeholder="Ana" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                    <input id="register-name" type="text" placeholder="Ana" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required/>
                 </div>
                 <div>
                     <label class="mb-2 block text-sm font-medium text-slate-700" for="register-lastname">Apellido</label>
-                    <input id="register-lastname" type="text" placeholder="Torres" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                    <input id="register-lastname" type="text" placeholder="Torres" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required/>
                 </div>
                 </div>
 
                 <div>
                 <label class="mb-2 block text-sm font-medium text-slate-700" for="register-email">Correo</label>
-                <input id="register-email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                <input id="register-email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required/>
                 </div>
 
                 <div class="grid gap-5 md:grid-cols-2">
                 <div>
                     <label class="mb-2 block text-sm font-medium text-slate-700" for="register-password">Contrasena</label>
-                    <input id="register-password" type="password" placeholder="Crea una contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                    <input id="register-password" type="password" placeholder="Crea una contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required/>
                 </div>
                 <div>
                     <label class="mb-2 block text-sm font-medium text-slate-700" for="register-role">Rol</label>
-                    <select id="register-role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none">
+                    <select id="register-role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" required>
                     <option>USER</option>
                     <option>ADMIN</option>
                     </select>
@@ -74,7 +75,7 @@ export function setUpRegister() {
     const password = document.getElementById('register-password');
     const role = document.getElementById('register-role');
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const newUser ={
@@ -85,7 +86,10 @@ export function setUpRegister() {
             roles: [role.value]
         };
         
-        crearUsuario(newUser);
+        const response = createUser(newUser);
+        if (response) {
+            alertaExitosa('Usuario creado existosamente')
+        }
     });
 
 
