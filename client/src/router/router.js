@@ -30,4 +30,6 @@ export function initRouter() {
         window.history.pushState({}, "", href)
         renderRoute();
     });
+    window.addEventListener('popstate', renderRoute)
+    renderRoute();
 }
