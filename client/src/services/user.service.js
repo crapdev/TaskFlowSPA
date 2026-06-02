@@ -1,51 +1,51 @@
 import { alertaError } from "../utils/alert";
 
-const endpoint = 'http://localhost:3000/';
+const endpoint = 'http://localhost:3000/users';
 
 export async function getUsers() {
-    try {
-        const response = await fetch(`${endpoint}users`)
-        
-        if (response.ok == false) {
-            throw new Error("Error al obtener los usuarios")
-        } else {
-            return await response.json()
-        }
+    const response = await fetch(endpoint);
 
-    } catch (error) {
-        console.error("Error en obtenerUsuarios:", error)
-        throw error
+    if (!response.ok) {
+        throw new Error("Error al obtener los usuarios");
     }
-
+    return response.json();
 }
 
 
 export async function createUser(user) {
-    const response = await fetch('http://localhost:3000/users', {
+    const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-            'content-type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
     });
-    // try {
-    //     await crearProducto(producto)
-    //     traeDatos()
-    //     alertaExitosa("Producto agregado exitosamente")
-    //     formulario.reset()
-    // } catch (error) {
-    //     console.error("Error al agregar:", error)
-    //     alertaError("Hubo un error al guardar el producto")
-    // }
 
-    if(!response.ok){
-        throw new Error('Error al momento de crear un usuario')
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: No se pudo crear el usuario`);
     }
-    return await response.json();
+
+    return response.json();
 }
-// GET http://localhost:3000/tasks?_expand=user
 
 
-
+export async function findUser(email, password = null) {
+    const email_ = encodeURIComponent(email.toLowerCase().trim());
+    const password_ = password ? encodeURIComponent(password.trim()) : null;
+    
+    // Si se tiene contraseña, se busca por email y password, si no, solo por email
+    const url = password_ ? `${endpoint}?email=${email_}&password=${password_}` : `${endpoint}?email=${email_}`;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: Error al buscar el usuario`);
+    }
+    
+    const users = await response.json();
+    
+    // Si encuentra usuarios, retorna el primero, si no, retorna null
+    return users.length > 0 ? users[0] : null;
+}
 
 
