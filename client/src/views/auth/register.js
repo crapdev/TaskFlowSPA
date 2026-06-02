@@ -1,3 +1,4 @@
+import { routes } from "../../router/routes";
 import { createUser } from "../../services/user.service";
 import { alertaExitosa } from "../../utils/alert";
 
@@ -60,6 +61,9 @@ export function renderRegister() {
                 <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500" href="/src/views/login.html">
                 Registrarme
                 </a>
+                <button type="submit" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                Registrarme s
+                </button>
             </form>
             </div>
         </section>
@@ -78,18 +82,17 @@ export function setUpRegister() {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const newUser ={
+        const newUser = {
             name: name.value.trim().toLowerCase(),
             lastname: lastname.value.trim().toLowerCase(),
             email: email.value.trim().toLowerCase(),
             password: password.value.trim(),
             roles: [role.value]
         };
-        
-        const response = createUser(newUser);
-        if (response) {
-            alertaExitosa('Usuario creado existosamente')
-        }
+        // const response = createUser(newUser);
+        // if (response) {
+        //     alertaExitosa('Usuario creado existosamente')
+        // }
     });
 
 

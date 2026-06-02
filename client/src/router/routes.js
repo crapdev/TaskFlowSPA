@@ -9,7 +9,6 @@ import { renderDashboard, setUpDashboard } from "../views/users/dashboard";
 import { renderProfile, setUpProfile } from "../views/users/profile";
 
 export const routes = {
-    "*": renderNotFound,
     "/": {
         render: renderHome
     },
@@ -51,3 +50,4 @@ export const routes = {
     },
 }
 
+export const noFoundView = renderNotFound;
