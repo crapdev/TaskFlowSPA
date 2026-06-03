@@ -10,17 +10,20 @@ import { renderProfile, setUpProfile } from "../views/users/profile";
 
 export const routes = {
     "/": {
-        render: renderHome
+        render: renderHome,
+        requiresAuth: false,
     },
     "/login": {
         render: renderLogin,
         setUp: setUpLogin,
-        requiresAuth: false
+        requiresAuth: false,
+        redirectIfAuthenticated: true,
     },
     "/register": {
         render: renderRegister,
         setUp: setUpRegister,
-        requiresAuth: false
+        requiresAuth: false,
+        redirectIfAuthenticated: true,
     },
     "/dashboard": {
         render: renderDashboard,
@@ -31,7 +34,7 @@ export const routes = {
         render: renderAdmin,
         setUp: setUpRegister,
         requiresAuth: true,
-        requiredRole: ["ADMIN"]
+        allowedRoles: ["ADMIN"]
     },
     "/profile": {
         render: renderProfile,

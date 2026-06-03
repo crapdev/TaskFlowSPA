@@ -1,3 +1,4 @@
+import { renderRoute } from "../router/router";
 
 
 const SESSION_STORAGE_KEY = "CURRENT_SESSION"
@@ -34,3 +35,40 @@ export function getSession() {
 export function deleteSession() {
     localStorage.removeItem(SESSION_STORAGE_KEY)
 }
+
+
+export function redirectIfAuthenticated(route) {
+    const sessionUser = getSession();
+
+    if (route.redirectIfAuthenticated && sessionUser) {
+        window.history.replaceState({}, "", "/dashboard");
+        renderRoute();
+        return true
+    }
+    return false
+}
+
+export function isLogin(route) {
+    const sessionUser = getSession();
+
+    if (route.requiresAuth && !sessionUser) {
+        window.history.replaceState({}, "", "/login");
+        renderRoute()
+        return true
+    }
+    return false
+
+}
+
+export function isAdmin(route) {
+    const sessionUser = getSession();
+
+    if (route.allowedRoles && !route.allowedRoles.some((rol) => sessionUser?.roles?.includes(rol))) {
+        window.history.replaceState({}, "", "/dashboard");
+        renderRoute();
+        return true
+    }
+    return false
+
+}
+
