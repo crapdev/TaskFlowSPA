@@ -30,11 +30,11 @@ export async function createUser(user) {
 
 
 export async function findUser(email, password = null) {
-    const email_ = encodeURIComponent(email.toLowerCase().trim());
-    const password_ = password ? encodeURIComponent(password.trim()) : null;
+    const emailClean = encodeURIComponent(email.toLowerCase().trim());
+    const passwordClean = password ? encodeURIComponent(password.trim()) : null;
     
     // Si se tiene contraseña, se busca por email y password, si no, solo por email
-    const url = password_ ? `${endpoint}?email=${email_}&password=${password_}` : `${endpoint}?email=${email_}`;
+    const url = passwordClean ? `${endpoint}?email=${emailClean}&password=${passwordClean}` : `${endpoint}?email=${emailClean}`;
     
     const response = await fetch(url);
     

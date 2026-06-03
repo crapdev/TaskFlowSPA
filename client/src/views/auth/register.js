@@ -1,6 +1,6 @@
-import { routes } from "../../router/routes";
-import { createUser } from "../../services/user.service";
-import { alertaExitosa } from "../../utils/alert";
+import { renderRoute } from "../../router/router";
+import { createUser, findUser } from "../../services/user.service";
+import { alertaError, alertaExitosa } from "../../utils/alert";
 
 export function renderRegister() {
     return `
@@ -58,11 +58,9 @@ export function renderRegister() {
                 </div>
                 </div>
 
-                <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500" href="/login">
-                Registrarme
-                </a>
+                
                 <button type="submit" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
-                Registrarme s
+                Registrarme
                 </button>
             </form>
             </div>
@@ -89,14 +87,27 @@ export function setUpRegister() {
             password: password.value.trim(),
             roles: [role.value]
         };
-        // const response = createUser(newUser);
-        // if (response) {
-        //     alertaExitosa('Usuario creado existosamente')
-        // }
+        // valida que si hay un usuario con ese correo, y no permita crear otro con ese mismo correo
+        const existingUser = await findUser(newUser.email);
+        if (existingUser) {
+            return alertaError('Ya existe un usuario registrado con ese correo');
+        }   
+        
+        try {
+            await createUser(newUser);
+            
+            alertaExitosa('Usuario creado exitosamente');
+
+            setTimeout(() => {
+                window.history.pushState({}, "", "/login");
+                renderRoute();
+            }, 500);
+
+        } catch (error) {
+            console.error('Error al crear usuario:', error);
+        }
+        
     });
-
-
-
 
 
 

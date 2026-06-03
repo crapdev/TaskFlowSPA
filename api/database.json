@@ -4,23 +4,70 @@
       "name": "cristian",
       "lastname": "albor",
       "email": "calborparra@gmail.com",
-      "password": "123",
+      "password": "123a",
       "roles": [
         "USER"
       ],
-      "id": "v-lscze1Sqk"
+      "id": "aFnTORSarNY"
     },
     {
       "name": "cristian",
       "lastname": "albor",
-      "email": "calborparra@gmail.com",
+      "email": "calborparrad@gmail.com",
       "password": "123",
       "roles": [
         "USER"
       ],
-      "id": "MBtqyxXlgFQ"
+      "id": "Eo69VMwud7Q"
+    },
+    {
+      "name": "cristian",
+      "lastname": "albor",
+      "email": "calborpfdfdarra@gmail.com",
+      "password": "fdsfa",
+      "roles": [
+        "USER"
+      ],
+      "id": "huUYEWRasU4"
+    },
+    {
+      "name": "fadsfsdf",
+      "lastname": "safasd",
+      "email": "fasdfasdads@gmail.comff",
+      "password": "fdsfsd",
+      "roles": [
+        "USER"
+      ],
+      "id": "DZoZkZv7Rl8"
+    },
+    {
+      "name": "admin",
+      "lastname": "admin",
+      "email": "admin@gmail.com",
+      "password": "asd1",
+      "roles": [
+        "ADMIN"
+      ],
+      "id": "-SGwVawI5z0"
     }
   ],
-  "tasks": [],
+  "tasks": [
+    {
+      "title": "adsfadsfsd",
+      "description": "fasdfasdf",
+      "status": "Pendiente",
+      "date": "2026-06-03",
+      "userID": "-SGwVawI5z0",
+      "id": "skZbMqrUomM"
+    },
+    {
+      "title": "otra tarea",
+      "description": "fadsfasdf",
+      "status": "Pendiente",
+      "date": "2026-06-03",
+      "userID": "-SGwVawI5z0",
+      "id": "5guAWyU1kSw"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

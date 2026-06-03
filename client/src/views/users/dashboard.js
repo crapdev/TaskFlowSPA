@@ -1,3 +1,5 @@
+import { getSession } from "../../services/auth.service";
+
 export function renderDashboard() {
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
@@ -59,5 +61,11 @@ export function renderDashboard() {
 
 
 export function setUpDashboard() {
-    return console.log('hola')
+    const sessionUser = getSession();
+    const adminButton = document.getElementById('adminTag');
+    // Si el botón de admin existe en la vista actual, y no tiene rol de admin, remover
+    if (adminButton && !sessionUser?.roles?.includes('ADMIN')) {
+        adminButton.remove();
+    }
+    
 }

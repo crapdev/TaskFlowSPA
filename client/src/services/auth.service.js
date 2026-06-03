@@ -37,8 +37,7 @@ export function deleteSession() {
 }
 
 
-export function redirectIfAuthenticated(route) {
-    const sessionUser = getSession();
+export function redirectIfAuthenticated(route, sessionUser) {
 
     if (route.redirectIfAuthenticated && sessionUser) {
         window.history.replaceState({}, "", "/dashboard");
@@ -48,8 +47,7 @@ export function redirectIfAuthenticated(route) {
     return false
 }
 
-export function isLogin(route) {
-    const sessionUser = getSession();
+export function isLogin(route,sessionUser) {
 
     if (route.requiresAuth && !sessionUser) {
         window.history.replaceState({}, "", "/login");
@@ -60,8 +58,7 @@ export function isLogin(route) {
 
 }
 
-export function isAdmin(route) {
-    const sessionUser = getSession();
+export function isAdmin(route, sessionUser) {
 
     if (route.allowedRoles && !route.allowedRoles.some((rol) => sessionUser?.roles?.includes(rol))) {
         window.history.replaceState({}, "", "/dashboard");
@@ -72,3 +69,8 @@ export function isAdmin(route) {
 
 }
 
+export function logOut(link) {
+    if(link.textContent === 'Logout'){
+            deleteSession();
+        }
+}

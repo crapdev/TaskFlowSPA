@@ -66,3 +66,7 @@ export function renderAdmin() {
         </main>
     `
 }
+
+export function setUpAdmin() {
+    return console.log('hola admin')
+}

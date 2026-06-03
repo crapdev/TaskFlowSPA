@@ -1,5 +1,10 @@
+import { renderRoute } from "../../router/router";
+import { createSession } from "../../services/auth.service";
+import { findUser } from "../../services/user.service";
+import { alertaError, alertaExitosa } from "../../utils/alert";
+
 export function renderLogin() {
-    return `
+  return `
         <main class="grid min-h-screen lg:grid-cols-[1fr_0.95fr]">
       <section class="flex items-center justify-center px-6 py-10">
         <div class="w-full max-w-xl rounded-[2rem] border border-blue-100 bg-white p-8 shadow-xl shadow-blue-100/70">
@@ -14,7 +19,7 @@ export function renderLogin() {
             <p class="mt-4 text-slate-600">Ingresa a tu espacio de trabajo y continua organizando tus tareas.</p>
           </div>
 
-          <form class="mt-8 grid gap-5">
+          <form id="login-form" class="mt-8 grid gap-5">
             <div>
               <label class="mb-2 block text-sm font-medium text-slate-700" for="email">Correo</label>
               <input id="email" type="email" required placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required />
@@ -23,9 +28,9 @@ export function renderLogin() {
               <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
               <input id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
             </div>
-            <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500" href="/dashboard">
-              Entrar al dashboard
-            </a>
+            <button type="submit" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                Entrar al dashboard
+            </button>
           </form>
         </div>
       </section>
@@ -47,8 +52,33 @@ export function renderLogin() {
 
 export function setUpLogin() {
 
-  const loginForm = document.getElementById('login-form');
-  
+  const form = document.getElementById('login-form');
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
 
-    return console.log('hola')
+  form.addEventListener('submit',async (event) => {
+    event.preventDefault();
+    
+    const existingUser = await findUser(email.value,password.value);
+
+    if (!existingUser) {
+      return alertaError('Credenciales incorrectas o no existe un usuario con esas credenciales');
+    }
+
+
+    await createSession(existingUser);
+    alertaExitosa('Has iniciado sesion exitosamente');
+    window.history.pushState({}, "", "/dashboard");
+    renderRoute();
+    // setTimeout(() => {
+    // }, 1000);
+    
+
+
+
+
+  });
+
+
+
 }

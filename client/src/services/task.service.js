@@ -4,7 +4,11 @@ const endpoint = 'http://localhost:3000/tasks';
 
 export async function getTasks() {
     const response = await fetch(endpoint);
-
+    
+    if (!response.ok) {
+        throw new Error("Error al obtener las tareas ");
+    }
+    return response.json();
 
 }
 
@@ -26,7 +30,7 @@ export async function createTask(task) {
 }
 
 export async function getTasksByUser(userID) {
-    const response = await fetch(`${endpoint}?_expand=user&userId=${userID}`);
+    const response = await fetch(`${endpoint}?userID=${userID}`);
 
     if (!response.ok) {
         throw new Error(`Error ${response.status}: No se pudo obtener las tareas del usuario`);
@@ -35,4 +39,5 @@ export async function getTasksByUser(userID) {
     return response.json();
 }
 
-// GET http://localhost:3000/tasks?_expand=user
+// http://localhost:3000/tasks?_embed=user         trae todas las tareas con su usuario incluido (admins)
+// http://localhost:3000/tasks?userID=${id a buscar}     trae las tareas de un usuario (user)

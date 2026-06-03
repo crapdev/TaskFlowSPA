@@ -1,10 +1,10 @@
 import Swal from "sweetalert2"
 
 
-export function alertaExitosa(mensaje) {
+export function alertaExitosa(mensaje, position = 'top-end', toast = true) {
     Swal.mixin({
-        toast: true,
-        position: "top-end",
+        toast: toast,
+        position: position,
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
@@ -16,6 +16,7 @@ export function alertaExitosa(mensaje) {
         icon: "success",
         title: mensaje
     })
+
 }
 
 export function alertaError(mensaje) {

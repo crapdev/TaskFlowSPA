@@ -1,4 +1,4 @@
-import { getSession, isAdmin, isLogin, redirectIfAuthenticated } from "../services/auth.service";
+import { deleteSession, getSession, isAdmin, isLogin, logOut, redirectIfAuthenticated } from "../services/auth.service";
 import { noFoundView, routes } from "./routes";
 
 export function renderRoute() {
@@ -9,16 +9,11 @@ export function renderRoute() {
     const route = routes[currentPath] ?? { render: noFoundView };
 
     // Si cualquiera de las tres devuelve true, se activa el return y detiene el router
-    if (redirectIfAuthenticated(route) || isLogin(route) || isAdmin(route)) return;
+    const sessionUser = getSession();
+    if (redirectIfAuthenticated(route,sessionUser) || isLogin(route,sessionUser) || isAdmin(route, sessionUser)) return;
 
 
     app.innerHTML = route.render();
-
-    const adminButton = document.getElementById('adminTag');
-    // Si el botón de admin existe en la vista actual, y no tiene rol de admin, remover
-    if (adminButton && !sessionUser?.roles?.includes('ADMIN')) {
-        adminButton.remove();
-    }
 
     // then when the route exists, display its setUp
     if (route.setUp) {
@@ -33,6 +28,7 @@ export function initRouter() {
         if (!link) {
             return
         }
+        logOut(link);
 
         const href = link.getAttribute('href');
         if (!href || !href.startsWith("/")) {

@@ -4,7 +4,7 @@ import { renderRegister, setUpRegister } from "../views/auth/register";
 import { renderHome } from "../views/home";
 import { renderTaskForm, setUpTaskForm } from "../views/task/task-form";
 import { renderTasks, setUpTasks } from "../views/task/tasks";
-import { renderAdmin } from "../views/users/admin";
+import { renderAdmin, setUpAdmin } from "../views/users/admin";
 import { renderDashboard, setUpDashboard } from "../views/users/dashboard";
 import { renderProfile, setUpProfile } from "../views/users/profile";
 
@@ -32,7 +32,7 @@ export const routes = {
     },
     "/admin": {
         render: renderAdmin,
-        setUp: setUpRegister,
+        setUp: setUpAdmin,
         requiresAuth: true,
         allowedRoles: ["ADMIN"]
     },
