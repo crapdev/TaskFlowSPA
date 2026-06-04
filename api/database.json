@@ -11,10 +11,10 @@
       "id": "aFnTORSarNY"
     },
     {
-      "name": "admin",
-      "lastname": "admin",
-      "email": "admin@gmail.com",
-      "password": "asd1",
+      "name": "NOM",
+      "lastname": " APPEL",
+      "email": "update@gmail.com",
+      "password": "123qwe",
       "roles": [
         "ADMIN"
       ],
@@ -22,14 +22,6 @@
     }
   ],
   "tasks": [
-    {
-      "title": "Terminar el TASKFLOWSPA HOYYYYYYYY",
-      "description": "aqui es yufdsfadflkdsfkasdfkasdjfkjdksjfjadjfksdfkasdlfkñjadsf",
-      "status": "Completada",
-      "date": "2026-06-03",
-      "userId": "-SGwVawI5z0",
-      "id": "7c6kdaZWJks"
-    },
     {
       "title": "esta es una tarea de un rol useresta es una tarea de un rol user",
       "description": "esta es una tarea de un rol user",

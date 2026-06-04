@@ -26,7 +26,7 @@ export function renderLogin() {
             </div>
             <div>
               <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
-              <input id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+              <input id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required/>
             </div>
             <button type="submit" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
                 Entrar al dashboard
@@ -66,15 +66,10 @@ export function setUpLogin() {
     }
 
 
-    await createSession(existingUser);
+    createSession(existingUser);
     alertaExitosa('Has iniciado sesion exitosamente');
     window.history.pushState({}, "", "/dashboard");
     renderRoute();
-    // setTimeout(() => {
-    // }, 1000);
-    
-
-
 
 
   });

@@ -1,7 +1,6 @@
 import { renderRoute } from "../router/router";
-import { getSession } from "../services/auth.service";
 import { deleteTask, getAllTasks, getTasksByUser, updateTask } from "../services/task.service";
-import { alertaExitosa } from "../utils/alert";
+import { alertaConfirmacion, alertaExitosa } from "../utils/alert";
 
 
 export async function renderMyTasks(currentUser) {
@@ -94,7 +93,7 @@ export async function renderMyTasks(currentUser) {
 
 export  function buttonsTask() {
 
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', async (event) => {
         const btn = event.target.closest('button'); // Get the tag a clicked
         if (!btn) {
             return
@@ -111,12 +110,17 @@ export  function buttonsTask() {
             // redirect
             window.history.replaceState({}, "", "/taskForm");
             renderRoute();
+            return
         }
 
         if (btn.textContent.trim() == 'Eliminar') {
-            deleteTask(btn.dataset.id);
-            alertaExitosa('Tarea eliminada exitosamente');
-            renderRoute();
+            const result = await alertaConfirmacion();
+            if (result) {
+                deleteTask(btn.dataset.id);
+                alertaExitosa('Tarea eliminada exitosamente');
+                renderRoute();
+            }
+            return
         }
 
     

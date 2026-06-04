@@ -1,3 +1,7 @@
+import { createSession, deleteSession, getSession } from "../../services/auth.service";
+import { findUser, updateUser } from "../../services/user.service";
+import { alertaConfirmacion, alertaError, alertaExitosa } from "../../utils/alert";
+
 export function renderProfile() {
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
@@ -20,22 +24,32 @@ export function renderProfile() {
             </aside>
 
             <section class="rounded-[2rem] border border-blue-100 bg-white p-8 shadow-xl shadow-blue-50">
-            <form class="grid gap-5">
+            <form id='profile-form' class="grid gap-5">
                 <div>
                 <label class="mb-2 block text-sm font-medium text-slate-700" for="name">Nombre</label>
-                <input id="name" type="text" value="Ana Torres" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
+                <input id="name" type="text" placeholder="Ana" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" required/>
+                </div>
+                <div>
+                <label class="mb-2 block text-sm font-medium text-slate-700" for="lastname">Apellido</label>
+                <input id="lastname" type="text" placeholder="Torres" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" required/>
                 </div>
                 <div>
                 <label class="mb-2 block text-sm font-medium text-slate-700" for="profile-email">Correo</label>
-                <input id="profile-email" type="email" value="ana@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
+                <input id="profile-email" type="email" placeholder="ana@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" required />
                 </div>
                 <div>
                 <label class="mb-2 block text-sm font-medium text-slate-700" for="password-new">Nueva contrasena</label>
-                <input id="password-new" type="password" placeholder="Actualiza tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                <input id="password-new" type="password" placeholder="Actualiza tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" required/>
                 </div>
                 <div class="flex flex-col gap-3 pt-2 sm:flex-row">
-                <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500" href="/profile">Guardar cambios</a>
-                <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50" href="/login">Eliminar mi cuenta</a>
+
+                <button type="submit" class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"">
+                Guardar cambios
+                </button>
+
+                <button id='btn-delete' type="button" class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50">
+                Eliminar mi cuenta
+                </button>
                 </div>
             </form>
             </section>
@@ -44,6 +58,46 @@ export function renderProfile() {
     ` 
 }
 
-export function setUpProfile() {
-    return console.log('hola')
+export async function setUpProfile() {
+    
+    const form = document.getElementById('profile-form');
+    const name = document.getElementById('name');
+    const lastName = document.getElementById('lastname');
+    const email = document.getElementById('profile-email');
+    const password = document.getElementById('password-new');
+    const btnDelete = document.getElementById('btn-delete');
+
+    const dataUser = await getSession();
+    name.value = dataUser.name;
+    lastName.value = dataUser.lastname;
+    email.value = dataUser.email;
+    
+
+    form.addEventListener('submit', async (event) =>{
+        event.preventDefault();
+        const existingUser = await findUser(email.value);
+        if (existingUser && existingUser.email != dataUser.email) {
+            alertaError('Este correo ya corresponde a otro usuario')
+        }else{
+
+            const datauser = {
+                name: name.value,
+                lastname: lastName.value,
+                email: email.value,
+                password: password.value
+            }
+
+            await updateUser(dataUser.id, datauser)
+            alertaExitosa('Se han actualizado los datos exitosamente')
+            // deleteSession();
+            // createSession(dataUser);
+        }
+    });
+
+    btnDelete.addEventListener('click', (event) =>{
+        event.preventDefault();
+        console.log('le diste click a eliminar mi cuenta')
+    });
+
+    // no dejar que cambie de correo a uno existente
 }
