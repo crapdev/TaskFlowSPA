@@ -11,36 +11,6 @@
       "id": "aFnTORSarNY"
     },
     {
-      "name": "cristian",
-      "lastname": "albor",
-      "email": "calborparrad@gmail.com",
-      "password": "123",
-      "roles": [
-        "USER"
-      ],
-      "id": "Eo69VMwud7Q"
-    },
-    {
-      "name": "cristian",
-      "lastname": "albor",
-      "email": "calborpfdfdarra@gmail.com",
-      "password": "fdsfa",
-      "roles": [
-        "USER"
-      ],
-      "id": "huUYEWRasU4"
-    },
-    {
-      "name": "fadsfsdf",
-      "lastname": "safasd",
-      "email": "fasdfasdads@gmail.comff",
-      "password": "fdsfsd",
-      "roles": [
-        "USER"
-      ],
-      "id": "DZoZkZv7Rl8"
-    },
-    {
       "name": "admin",
       "lastname": "admin",
       "email": "admin@gmail.com",
@@ -53,20 +23,28 @@
   ],
   "tasks": [
     {
-      "title": "adsfadsfsd",
-      "description": "fasdfasdf",
-      "status": "Pendiente",
+      "title": "Terminar el TASKFLOWSPA HOYYYYYYYY",
+      "description": "aqui es yufdsfadflkdsfkasdfkasdjfkjdksjfjadjfksdfkasdlfkñjadsf",
+      "status": "Completada",
       "date": "2026-06-03",
-      "userID": "-SGwVawI5z0",
-      "id": "skZbMqrUomM"
+      "userId": "-SGwVawI5z0",
+      "id": "7c6kdaZWJks"
     },
     {
-      "title": "otra tarea",
-      "description": "fadsfasdf",
+      "title": "esta es una tarea de un rol useresta es una tarea de un rol user",
+      "description": "esta es una tarea de un rol user",
+      "status": "En progreso",
+      "date": "2026-06-03",
+      "userId": "aFnTORSarNY",
+      "id": "aEeeWwQGveQ"
+    },
+    {
+      "title": "SEGUNDA TAREA CHAMO",
+      "description": "FADFDfgasdfgdfgdfgsdfgsdfgsdfgsdfgsd",
       "status": "Pendiente",
       "date": "2026-06-03",
-      "userID": "-SGwVawI5z0",
-      "id": "5guAWyU1kSw"
+      "userId": "aFnTORSarNY",
+      "id": "5XK-Y6O4iuQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

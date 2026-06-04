@@ -11,7 +11,6 @@ export async function getUsers() {
     return response.json();
 }
 
-
 export async function createUser(user) {
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -28,6 +27,34 @@ export async function createUser(user) {
     return response.json();
 }
 
+export async function updateUser(userId, updatedUser) {
+    const response = await fetch(`${endpoint}/${userId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: No se pudo actualizar el usuario`);
+    }
+
+    return response.json();
+}
+
+export async function deleteUser(userId) {
+    const response = await fetch(`${endpoint}/${userId}`, {
+        method: 'DELETE'
+    }); 
+
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: No se pudo eliminar el usuario`);
+    }
+
+    return response.json();
+}
+
 
 export async function findUser(email, password = null) {
     const emailClean = encodeURIComponent(email.toLowerCase().trim());
@@ -36,12 +63,12 @@ export async function findUser(email, password = null) {
     // Si se tiene contraseña, se busca por email y password, si no, solo por email
     const url = passwordClean ? `${endpoint}?email=${emailClean}&password=${passwordClean}` : `${endpoint}?email=${emailClean}`;
     
+
     const response = await fetch(url);
-    
     if (!response.ok) {
-        throw new Error(`Error ${response.status}: Error al buscar el usuario`);
+        throw new Error(`Error ${response.status}: No se pudo buscar el usuario`);
     }
-    
+
     const users = await response.json();
     
     // Si encuentra usuarios, retorna el primero, si no, retorna null

@@ -40,5 +40,5 @@ export function initRouter() {
         renderRoute();
     });
     window.addEventListener('popstate', renderRoute)
-    renderRoute();
+    // renderRoute();
 }

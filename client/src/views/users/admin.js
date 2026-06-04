@@ -70,3 +70,7 @@ export function renderAdmin() {
 export function setUpAdmin() {
     return console.log('hola admin')
 }
+
+
+// para cuando vaya a mostrar todos los usuarios, si dentro de los usuarios que esta recorriendo es el mismo que el que esta logueado, no mostrar la opcion de editar rol 
+// y pobner algo como "YOURSELF" y mostrar al prinpicio de la lista, y para el resto de usuarios mostrar la opcion de editar rol.

@@ -29,8 +29,38 @@ export async function createTask(task) {
     return response.json();
 }
 
+
+export async function updateTask(taskId, updatedTask) {
+    const response = await fetch(`${endpoint}/${taskId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedTask)
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: No se pudo actualizar la tarea`);
+    }
+
+    return response.json();
+}
+
+export async function deleteTask(taskId) {
+    const response = await fetch(`${endpoint}/${taskId}`, {
+        method: 'DELETE'
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: No se pudo eliminar la tarea`);
+    }
+
+    return response.json();
+}
+
+// trae las tareas de un usuario (user)
 export async function getTasksByUser(userID) {
-    const response = await fetch(`${endpoint}?userID=${userID}`);
+    const response = await fetch(`${endpoint}?userId=${userID}`);
 
     if (!response.ok) {
         throw new Error(`Error ${response.status}: No se pudo obtener las tareas del usuario`);
@@ -39,5 +69,14 @@ export async function getTasksByUser(userID) {
     return response.json();
 }
 
-// http://localhost:3000/tasks?_embed=user         trae todas las tareas con su usuario incluido (admins)
-// http://localhost:3000/tasks?userID=${id a buscar}     trae las tareas de un usuario (user)
+
+// trae todas las tareas con su usuario incluido (admins)
+export async function getAllTasks() {
+    const response = await fetch(`${endpoint}?_embed=user`);
+
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: No se pudo obtener las tareas del usuario`);
+    }
+
+    return response.json();
+}

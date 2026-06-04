@@ -1,4 +1,4 @@
-import { renderMyTasks } from "../../controllers/tasks.controller"
+import { buttonsTask, renderMyTasks } from "../../controllers/tasks.controller"
 import { getSession } from "../../services/auth.service";
 
 export function renderTasks() {
@@ -27,35 +27,22 @@ export function renderTasks() {
             </a>
         </section>
 
-        <section class="mt-8 grid gap-4">
-            <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
-                <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <div>
-                    <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-600">Completada</p>
-                    <h2 class="mt-2 text-2xl font-bold text-slate-900">Definir arquitectura inicial</h2>
-                    <p class="mt-3 max-w-2xl text-slate-600">Documentar la estructura por capas y dejar claro el alcance base del proyecto.</p>
-                    </div>
-                    <div class="flex gap-3">
-                    <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" href="/taskForm">Editar</a>
-                    <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" href="/tasks">Eliminar</a>
-                    </div>
-                </div>
-            </article>
+        <section id='tasksList' class="mt-8 grid gap-4">
 
-            
         </section>
         </main>
     `
 }
 
-export function setUpTasks() {
-    const sessionUser = getSession();
+export async function setUpTasks() {
+    const currentUser = getSession();
     
     const adminButton = document.getElementById('adminTag');
     // Si el botón de admin existe en la vista actual, y no tiene rol de admin, remover
-    if (adminButton && !sessionUser?.roles?.includes('ADMIN')) {
+    if (adminButton && !currentUser?.roles?.includes('ADMIN')) {
         adminButton.remove();
     }
-    renderMyTasks();
-
+    await renderMyTasks(currentUser);
+    buttonsTask();
+    
 }

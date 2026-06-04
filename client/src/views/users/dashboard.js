@@ -61,10 +61,10 @@ export function renderDashboard() {
 
 
 export function setUpDashboard() {
-    const sessionUser = getSession();
+    const currentUser = getSession();
     const adminButton = document.getElementById('adminTag');
     // Si el botón de admin existe en la vista actual, y no tiene rol de admin, remover
-    if (adminButton && !sessionUser?.roles?.includes('ADMIN')) {
+    if (adminButton && !currentUser?.roles?.includes('ADMIN')) {
         adminButton.remove();
     }
     

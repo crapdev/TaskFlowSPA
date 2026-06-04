@@ -1,6 +1,6 @@
 import { renderRoute } from "../../router/router";
 import { getSession } from "../../services/auth.service";
-import { createTask } from "../../services/task.service";
+import { createTask, updateTask } from "../../services/task.service";
 import { alertaExitosa } from "../../utils/alert";
 
 export function renderTaskForm() {
@@ -64,24 +64,55 @@ export function setUpTaskForm() {
     const form = document.getElementById('task-form');
     const title = document.getElementById('title');
     const description = document.getElementById('description');
-    const state = document.getElementById('status');
+    const status = document.getElementById('status');
     const date = document.getElementById('date');
+
+    const cacheData = localStorage.getItem('EDIT_TASK');
+    let taskId = null;
+    if (cacheData) {
+        const task = JSON.parse(cacheData);
+        taskId = task.id;
+
+        title.value = task.title;
+        description.value = task.description;
+        status.value = task.status;
+        date.value = task.date;
+        
+        localStorage.removeItem('EDIT_TASK');
+
+    }
+
 
     form.addEventListener('submit', async (event) =>{
         event.preventDefault();
 
         const user = await getSession();
-        const newTask = {
-            title: title.value,
-            description: description.value,
-            status: state.value,
-            date: date.value,
-            userID: user.id
-        }
+        
 
         try {
-            await createTask(newTask);
-            alertaExitosa('Tarea Creada exitosamente');
+            if (taskId) {
+                const dataTask = {
+                    title: title.value,
+                    description: description.value,
+                    status: status.value,
+                    date: date.value,
+                }
+                updateTask(taskId,dataTask)
+                alertaExitosa('Tarea editada exitosamente');
+                
+            }else{
+                const dataTask = {
+                    title: title.value,
+                    description: description.value,
+                    status: status.value,
+                    date: date.value,
+                    userId: user.id
+                }
+                await createTask(dataTask);
+                alertaExitosa('Tarea Creada exitosamente');
+
+            }
+
             window.history.replaceState({}, "", "/tasks");
             renderRoute();
             
