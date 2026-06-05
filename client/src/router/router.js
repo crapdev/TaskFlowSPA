@@ -8,7 +8,7 @@ export function renderRoute() {
     // If exists the current path, display it, else display noFoundView
     const route = routes[currentPath] ?? { render: noFoundView };
 
-    // Si cualquiera de las tres devuelve true, se activa el return y detiene el router
+    // If any of the three returns true, the return statement is triggered and the router stops
     const sessionUser = getSession();
     if (redirectIfAuthenticated(route,sessionUser) || isLogin(route,sessionUser) || isAdmin(route, sessionUser)) return;
 
@@ -28,6 +28,7 @@ export function initRouter() {
         if (!link) {
             return
         }
+        // if you cliked the log out button
         logOut(link);
 
         const href = link.getAttribute('href');

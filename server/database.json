@@ -11,10 +11,10 @@
       "id": "aFnTORSarNY"
     },
     {
-      "name": "NOM",
-      "lastname": " APPEL",
-      "email": "update@gmail.com",
-      "password": "123qwe",
+      "name": "el pichon",
+      "lastname": "eliminar",
+      "email": "admin@gmail.com",
+      "password": "123a",
       "roles": [
         "ADMIN"
       ],
@@ -23,20 +23,28 @@
   ],
   "tasks": [
     {
-      "title": "esta es una tarea de un rol useresta es una tarea de un rol user",
-      "description": "esta es una tarea de un rol user",
-      "status": "En progreso",
-      "date": "2026-06-03",
-      "userId": "aFnTORSarNY",
-      "id": "aEeeWwQGveQ"
-    },
-    {
       "title": "SEGUNDA TAREA CHAMO",
       "description": "FADFDfgasdfgdfgdfgsdfgsdfgsdfgsdfgsd",
       "status": "Pendiente",
       "date": "2026-06-03",
       "userId": "aFnTORSarNY",
       "id": "5XK-Y6O4iuQ"
+    },
+    {
+      "title": "tarea admin",
+      "description": "tarea admin",
+      "status": "Completada",
+      "date": "2026-06-04",
+      "userId": "-SGwVawI5z0",
+      "id": "hdYgpIatIng"
+    },
+    {
+      "title": "SEGUNDA tarea admin",
+      "description": "SEGUNDA tarea admin",
+      "status": "Completada",
+      "date": "2026-06-04",
+      "userId": "-SGwVawI5z0",
+      "id": "27uc3LQiIzo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

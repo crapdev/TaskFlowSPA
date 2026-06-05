@@ -38,8 +38,8 @@ export async function setUpTasks() {
     const currentUser = getSession();
     
     const adminButton = document.getElementById('adminTag');
-    // Si el botón de admin existe en la vista actual, y no tiene rol de admin, remover
-    if (adminButton && !currentUser?.roles?.includes('ADMIN')) {
+    // If you do not have admin privileges, remove the button
+    if (!currentUser?.roles?.includes('ADMIN')) {
         adminButton.remove();
     }
     await renderMyTasks(currentUser);

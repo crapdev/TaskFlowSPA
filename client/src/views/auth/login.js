@@ -59,13 +59,14 @@ export function setUpLogin() {
   form.addEventListener('submit',async (event) => {
     event.preventDefault();
     
+    // check that the user exists
     const existingUser = await findUser(email.value,password.value);
 
     if (!existingUser) {
       return alertaError('Credenciales incorrectas o no existe un usuario con esas credenciales');
     }
 
-
+    // if exists, create data in local stoorage and change the view
     createSession(existingUser);
     alertaExitosa('Has iniciado sesion exitosamente');
     window.history.pushState({}, "", "/dashboard");

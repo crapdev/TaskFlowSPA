@@ -72,7 +72,7 @@ export async function findUser(email, password = null) {
     const users = await response.json();
     
     // Si encuentra usuarios, retorna el primero, si no, retorna null
-    return users.length > 0 ? users[0] : null;
+    return users.length > 0 ? users[0] : false;
 }
 
 

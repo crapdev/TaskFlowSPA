@@ -12,6 +12,7 @@ export const routes = {
     "/": {
         render: renderHome,
         requiresAuth: false,
+        redirectIfAuthenticated: true,
     },
     "/login": {
         render: renderLogin,

@@ -61,12 +61,14 @@ export function renderTaskForm() {
 }
 
 export function setUpTaskForm() {
+    // to fish the form
     const form = document.getElementById('task-form');
     const title = document.getElementById('title');
     const description = document.getElementById('description');
     const status = document.getElementById('status');
     const date = document.getElementById('date');
 
+    // retrieve the task data from local storage
     const cacheData = localStorage.getItem('EDIT_TASK');
     let taskId = null;
     if (cacheData) {

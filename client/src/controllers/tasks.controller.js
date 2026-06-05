@@ -7,7 +7,7 @@ export async function renderMyTasks(currentUser) {
     const tasksList = document.getElementById('tasksList');
 
     if(currentUser.roles.includes('ADMIN')){
-
+        // si es admin mostrar todas las tareas con los nombres de los usuarios
         const tasks = await getAllTasks();
         
         for (const task of tasks) {
@@ -23,7 +23,7 @@ export async function renderMyTasks(currentUser) {
                         </div>
                         <div class="flex flex-col items-center ">
                             <div>
-                                <button class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" 
+                                <button class="btn-edit rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" 
                                 data-title='${title}'
                                 data-description='${description}'
                                 data-status='${status}'
@@ -34,7 +34,7 @@ export async function renderMyTasks(currentUser) {
                                     Editar
                                 </button>
 
-                                <button class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"" 
+                                <button class="btn-delete rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"" 
                                 data-id='${id}' >
                                     Eliminar
                                 </button>
@@ -49,6 +49,8 @@ export async function renderMyTasks(currentUser) {
         return
 
     }
+    // Display the tasks of the user with the “user” role
+    // TL se que esto es una mala practica, pero como estuve corto de tiempo, por eso lo dejo así, no crea que soy como brutico
     const tasks = await getTasksByUser(currentUser.id);
 
     for (const task of tasks) {
@@ -64,7 +66,7 @@ export async function renderMyTasks(currentUser) {
                         </div>
                         <div class="flex flex-col items-center ">
                             <div>
-                                <button class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+                                <button class="btn-edit rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
                                 data-title='${title}'
                                 data-description='${description}'
                                 data-status='${status}'
@@ -74,7 +76,7 @@ export async function renderMyTasks(currentUser) {
                                     Editar
                                 </button>
 
-                                <button class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50""
+                                <button class="btn-delete rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50""
                                 data-id='${id}'>
                                     Eliminar
                                 </button>
@@ -92,18 +94,20 @@ export async function renderMyTasks(currentUser) {
 
 
 export  function buttonsTask() {
+    const btnsEdit = document.querySelectorAll('.btn-edit');
+    const btnsDelete = document.querySelectorAll('.btn-delete');
 
-    document.addEventListener('click', async (event) => {
-        const btn = event.target.closest('button'); // Get the tag a clicked
-        if (!btn) {
-            return
-        }
-        if (btn.textContent.trim() == 'Editar') {
+
+    // When you clicked in edit, I retrieve the task data to save it to local storage
+
+    btnsEdit.forEach(btn => {
+        btn.addEventListener('click', () =>{
+
             const dataTask = {
                 id: btn.dataset.id,
                 title: btn.dataset.title,
                 description: btn.dataset.description,
-                status: btn.dataset.status,
+                status: btn.dataset.status, 
                 date: btn.dataset.date,
             }
             localStorage.setItem('EDIT_TASK', JSON.stringify(dataTask))
@@ -111,19 +115,23 @@ export  function buttonsTask() {
             window.history.replaceState({}, "", "/taskForm");
             renderRoute();
             return
-        }
+        });
+    });
 
-        if (btn.textContent.trim() == 'Eliminar') {
-            const result = await alertaConfirmacion();
-            if (result) {
+    // Delete the task if you clicked “Delete” 
+    btnsDelete.forEach(btn => {
+        btn.addEventListener('click', async () =>{
+            const response = await alertaConfirmacion();
+            if (response) {
                 deleteTask(btn.dataset.id);
                 alertaExitosa('Tarea eliminada exitosamente');
                 renderRoute();
             }
             return
-        }
-
-    
+        });
+        
     });
+
+
 
 }

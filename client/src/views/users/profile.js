@@ -1,5 +1,6 @@
+import { renderRoute } from "../../router/router";
 import { createSession, deleteSession, getSession } from "../../services/auth.service";
-import { findUser, updateUser } from "../../services/user.service";
+import { deleteUser, findUser, updateUser } from "../../services/user.service";
 import { alertaConfirmacion, alertaError, alertaExitosa } from "../../utils/alert";
 
 export function renderProfile() {
@@ -67,37 +68,50 @@ export async function setUpProfile() {
     const password = document.getElementById('password-new');
     const btnDelete = document.getElementById('btn-delete');
 
-    const dataUser = await getSession();
-    name.value = dataUser.name;
-    lastName.value = dataUser.lastname;
-    email.value = dataUser.email;
+    const currentUser = await getSession();
+    // poner en los input la informacion del usuario
+    name.value = currentUser.name;
+    lastName.value = currentUser.lastname;
+    email.value = currentUser.email;
     
 
     form.addEventListener('submit', async (event) =>{
         event.preventDefault();
+        // Ensure that the email address cannot be updated to that of another existing user
         const existingUser = await findUser(email.value);
-        if (existingUser && existingUser.email != dataUser.email) {
+        if (existingUser && existingUser.email != currentUser.email) {
             alertaError('Este correo ya corresponde a otro usuario')
         }else{
-
-            const datauser = {
+            // update, if the email != a exists user
+            const dataUser = {
                 name: name.value,
                 lastname: lastName.value,
                 email: email.value,
                 password: password.value
             }
-
-            await updateUser(dataUser.id, datauser)
+            
+            await updateUser(currentUser.id, dataUser)
             alertaExitosa('Se han actualizado los datos exitosamente')
-            // deleteSession();
-            // createSession(dataUser);
+
+            // update the data in de local storage of user
+            const dataUpdate = await findUser(email.value)
+            deleteSession();
+            createSession(dataUpdate);
+            console.log(dataUpdate);
+            
         }
     });
-
-    btnDelete.addEventListener('click', (event) =>{
+    // delete count
+    btnDelete.addEventListener('click', async (event) =>{
         event.preventDefault();
-        console.log('le diste click a eliminar mi cuenta')
+        const dataUser = await getSession();
+
+        
+        deleteSession();
+        deleteUser(dataUser.id);
+        alertaExitosa('Se ha eliminado el usuario exitosamente')
+        renderRoute();
+
     });
 
-    // no dejar que cambie de correo a uno existente
 }

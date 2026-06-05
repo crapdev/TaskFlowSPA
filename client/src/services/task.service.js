@@ -58,7 +58,7 @@ export async function deleteTask(taskId) {
     return response.json();
 }
 
-// trae las tareas de un usuario (user)
+// retrieves a user's tasks
 export async function getTasksByUser(userID) {
     const response = await fetch(`${endpoint}?userId=${userID}`);
 
@@ -70,7 +70,7 @@ export async function getTasksByUser(userID) {
 }
 
 
-// trae todas las tareas con su usuario incluido (admins)
+// retrieves all tasks along with their users (admins)
 export async function getAllTasks() {
     const response = await fetch(`${endpoint}?_embed=user`);
 

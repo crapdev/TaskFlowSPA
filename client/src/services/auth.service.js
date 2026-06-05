@@ -36,7 +36,7 @@ export function deleteSession() {
     localStorage.removeItem(SESSION_STORAGE_KEY)
 }
 
-
+// If I'm already logged in, redirect me
 export function redirectIfAuthenticated(route, sessionUser) {
 
     if (route.redirectIfAuthenticated && sessionUser) {
@@ -46,7 +46,7 @@ export function redirectIfAuthenticated(route, sessionUser) {
     }
     return false
 }
-
+// Redirect to the login page if you want to access pages that require authentication
 export function isLogin(route,sessionUser) {
 
     if (route.requiresAuth && !sessionUser) {
@@ -57,7 +57,7 @@ export function isLogin(route,sessionUser) {
     return false
 
 }
-
+// Do not allow it to be visible to the admin if the user has the “user” role
 export function isAdmin(route, sessionUser) {
 
     if (route.allowedRoles && !route.allowedRoles.some((rol) => sessionUser?.roles?.includes(rol))) {
@@ -69,6 +69,7 @@ export function isAdmin(route, sessionUser) {
 
 }
 
+// when you clicked the log out button
 export function logOut(link) {
     if(link.textContent === 'Logout'){
             deleteSession();

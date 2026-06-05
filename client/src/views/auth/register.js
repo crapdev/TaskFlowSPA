@@ -87,17 +87,17 @@ export function setUpRegister() {
             password: password.value.trim(),
             roles: [role.value]
         };
-        // valida que si hay un usuario con ese correo, y no permita crear otro con ese mismo correo
+        // It checks whether there is already a user with that email address and does not allow another user to be created with the same email address
         const existingUser = await findUser(newUser.email);
         if (existingUser) {
             return alertaError('Ya existe un usuario registrado con ese correo');
         }   
-        
+        // create a new user
         try {
             await createUser(newUser);
             
             alertaExitosa('Usuario creado exitosamente');
-
+            // 'change the view smoothly'
             setTimeout(() => {
                 window.history.pushState({}, "", "/login");
                 renderRoute();

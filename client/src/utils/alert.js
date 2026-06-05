@@ -6,7 +6,7 @@ export function alertaExitosa(mensaje, position = 'top-end', toast = true) {
         toast: toast,
         position: position,
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer
